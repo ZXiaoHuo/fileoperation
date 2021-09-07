@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header">
+    <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="gray"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+    style="margin:0px">
+        <el-menu-item index="1"><a href="/"  style="text-decoration: none">首页</a></el-menu-item>
+        <el-submenu index="2">
+            <template slot="title">xxx</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+            <el-menu-item index="2-3">选项3</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="3"><a href="http://110.40.170.199/" target="_blank" style="text-decoration: none">去我的导航页</a></el-menu-item>
+        <el-menu-item index="4"><a href="/tools"  style="text-decoration: none">小工具</a></el-menu-item>
+    </el-menu>
+</div>
+
+<div th:fragment="qrcode1">
+<el-row>
+    <el-col :span="10" :offset="1">
+        <div style="border: solid #c6cede 1px;text-align: center;height: 280px" >
+            <el-upload
+                    class="wrap"
+                    drag
+                    action="/api/qr"
+                    :on-success="handleFileSuccess"
+                    :before-upload="beforeFileUpload"
+                    style="margin-top: 20px;margin-bottom: 20px;">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+        </div>
+    </el-col>
+    <el-col :span="10" :offset="2">
+        <div style="border: solid #c6cede 1px;height: 280px">
+            <span style="padding: 10px">{{result}}</span>
+        </div>
+    </el-col>
+</el-row>
+</div>
+</body>
+</html>
+<style>
+    .wrap .el-upload .el-upload-dragger  {
+          border: none ;
+        }
+
+    /*.el-upload-dragger  {
+        border: saddlebrown ;
+    }*/
+    /*.el-upload-dragger {
+        background-color: #fff;
+        !*border: 1px dashed #d9d9d9;*!
+        border: none;
+        border-radius: 6px;
+        box-sizing: border-box;
+        width: 360px;
+        height: 180px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }*/
+</style>

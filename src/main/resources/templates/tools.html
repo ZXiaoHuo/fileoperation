@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WJGL</title>
+    <script th:src="@{~/js/vue.js}"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <el-row>
+        <el-col>
+            <div th:include="component/component.html :: header"></div>
+        </el-col>
+    </el-row>
+    <el-row style="margin-top: 20px">
+        <el-col :span="20" :offset="2">
+            <el-tabs type="border-card">
+                <el-tab-pane>
+                    <span slot="label"><i class="el-icon-view"></i>二维码识别</span>
+                    <div th:include="component/component.html :: qrcode1"></div>
+                </el-tab-pane>
+                <el-tab-pane label="消息中心">二维码生成</el-tab-pane>
+                <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+                <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+            </el-tabs>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="18" :offset="2">
+
+        </el-col>
+    </el-row>
+
+</div>
+<script>
+
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                activeIndex:'4',
+                result: '',
+                limit:1
+            }
+        },
+        methods:{
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleFileSuccess(res, file) {
+                //this.result = URL.createObjectURL(file.raw);
+                if(res.code==='0') {
+                    this.$message.error('解析错误');
+                    return
+                }
+                this.result = res.data
+            },
+            beforeFileUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                const isLt500KB = file.size / 1024  < 500;
+                if (!isJPG) {
+                    this.$message.error('上传图片只能是 JPG/PNG格式!');
+                }
+                /*if (!isLt2M) {
+                    this.$message.error('上传图片大小不能超过 2MB!');
+                }*/
+                if (!isLt500KB) {
+                    this.$message.error('上传图片大小不能超过 500KB!');
+                }
+                return isJPG && isLt2M;
+            }
+        },
+        created(){
+            console.log("created")
+        },
+        mounted(){
+            console.log("mounted")
+        }
+    })
+</script>
+</body>
+</html>
+<style>
+
+</style>
